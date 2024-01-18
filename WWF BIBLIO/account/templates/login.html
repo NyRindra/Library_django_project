@@ -1,0 +1,13 @@
+{% extends 'account_base.html' %}
+    {% block content %}
+    <form action="/accounts/login/" method="post" style="font-family: 'Oswald'">
+
+        {% csrf_token%}
+        {{formulaire.as_p}}
+        <p>
+        <input type="submit" value="Se connecter">
+        </p>
+
+        <p style="text-align: center"> <a  href="/reset_password/">Mot de passe oublié ?</a></p> <hr> <p style="text-align:center"><a class="creercompte" style=" padding:15px ; color:white ;background-color: black" href="/signin/ "> Créer un compte </a></p>
+    </form>
+    {% endblock content %}

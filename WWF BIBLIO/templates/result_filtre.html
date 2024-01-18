@@ -1,0 +1,304 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!--==================================== Barre indiquant une phrase =================================-->
+<div class="container-fluid mt-3" style ="position: relative; top: 30px;background-color: #fff" >
+		<div class="alert alert-primary" role="alert">
+		  Résultat de recherche pour : <strong>{{recherche}}</strong>
+		</div>
+</div>
+<!-- ====================Utilisation de la classe "nav" pour créer une barre d'onglets===================== -->
+<ul class="nav nav-tabs nav-justified" style="position: fixed; top: 100px;left: 0;width: 100%;background-color: #fff;z-index: 999;" id="myTab" role="tablist">
+    <li class="nav-item">
+    <!-- Utilisation de la classe "nav-link" pour créer un lien d'onglet -->
+    <a class="nav-link {% if active_tab == 'tab1' %} active {% endif %} " id="_4" data-toggle="tab" href="#all" role="tab" aria-controls="home" aria-selected="true">Tous</a>
+  </li>
+    <li class="nav-item">
+    <!-- Utilisation de la classe "nav-link" pour créer un lien d'onglet -->
+    <a class="nav-link {% if active_tab == 'tab2' %} active {% endif %} " id="_1" data-toggle="tab" href="#CodeP" role="tab" aria-controls="home" aria-selected="true">CP</a>
+  </li>
+
+
+<!-- NATAO COMMENTAIRE SATRIA TSY NILAINA (COMMENTAIRE IHANY KOA ILAY CONTENU AO AMBANY AO)
+    <li class="nav-item">
+        Utilisation de la classe "nav-link" pour créer un lien d'onglet
+    <a class="nav-link {% if active_tab == 'tab3' %} active {% endif %} " id="_2" data-toggle="tab" href="#Titre" role="Title" aria-controls="home" aria-selected="true">Titre</a>
+  </li>
+    TAPITRA ETO NY COMMENTAIRE MIDESACTIVER NY ONGLET TITRE-->
+
+  <li class="nav-item">
+    <!-- Utilisation de la classe "nav-link" pour créer un lien d'onglet -->
+    <a class="nav-link {% if active_tab == 'tab3' %} active {% endif %} " id="_5" data-toggle="tab" href="#Theme" role="tab" aria-controls="home" aria-selected="true">Thème</a>
+  </li>
+
+    <li class="nav-item">
+    <!-- Utilisation de la classe "nav-link" pour créer un lien d'onglet -->
+    <a class="nav-link {% if active_tab == 'tab4' %} active {% endif %} " id="_3" data-toggle="tab" href="#annee" role="tab" aria-controls="home" aria-selected="true">Année</a>
+  </li>
+
+
+</ul>
+<!-- =================================================FIN ONGLET=================================================== -->
+
+<!--========================================CONTENU DE TOUS LES ONGLETS========================================-->
+<div class="tab-content" style="margin-top: 20px " id="myTabContent">
+
+<!--========================================== Contenu de l'ONGLET 1 TOUS=========================================== -->
+    <div class="tab-pane fade {% if active_tab == 'tab1' %} show active {% endif %}  " id="all" role="tabpanel" aria-labelledby="profile-tab">
+
+        <!------------ Raha tsy misy objet ao anaty page_obj_by_all------------- -->
+     {% if not page_obj_by_all%}
+      <li class="list-group-item" >
+      <p> Aucun résultat trouvé dans correspondant à votre recherche  </p>
+      </li>
+
+        <!------------ Raha misy objet kosa ao anatin'ilay page_obj_by_all------------- -->
+     {% else %}
+            <!--Donc, on affiche une page contenant les objets--->
+            {% for item in page_obj_by_all %}
+            <li class="list-group-item" >
+                          <span class="text-success">Titre : </span> <span><a href="/metadata/?title={{ item.title }}&id={{item.id}}">{{ item.title }}</a></span>
+                          <br>
+                            {% if item.code_projet%}
+                          <span class="text-success">Code Projet : </span><span>{{ item.code_projet }}</span>
+                          <br>
+                            {% endif %}
+                            {% if item.publication_date%}
+                          <span class="text-success">Année de publication : </span><span>{{ item.publication_date }}</span>
+                          <br>
+                            {% endif %}
+            </li>
+            {% endfor %}
+
+        <!-- Pagination du premier onglet Django DOC "Pagination"-->
+        <!--
+        Il est important de noter que les objets pris par page "page_obj" possede des methode que l'on peut acceder
+        en utilisant des point :
+                - page_obj.previous_page_number
+                - page_obj.next_page_number
+                - page_obj.number
+                - page_obj.num_pages : nombre totale des pages
+        -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj_by_all.has_previous %}
+                    <a href="?pageAll=1&recherche={{recherche}}">&laquo; first</a>
+                    <a href="?pageAll={{ page_obj_by_all.previous_page_number }}&recherche={{recherche}}"> <</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj_by_all.number }} sur {{ page_obj_by_all.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj_by_all.has_next %}
+                    <a href="?pageAll={{ page_obj_by_all.next_page_number }}&recherche={{recherche}}"> > </a>
+                    <a href="?pageAll={{ page_obj_by_all.paginator.num_pages }}&recherche={{recherche}}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        {% endif %}
+
+</div>
+
+    <!--============================== Fin contenu ONGLET 1 (TOUS)=================================== -->
+
+<!--============================== Contenu de l'ONGLET 2 CODE PROJET (Tsy nampiasa pagination)====================== -->
+    <div class="tab-pane fade {% if active_tab == 'tab2' %} show active {% endif %} " id="CodeP" role="tabpanel" aria-labelledby="profile-tab">
+        <!------------ Raha tsy misy objet ao anaty page_obj_by_CP------------- -->
+     {% if not ZIP_CP %}
+      <li class="list-group-item" >
+      <p> Aucun document ayant un code projet correspondant à votre recherche  </p>
+      </li>
+        <!------------ Raha misy objet ao anaty page_obj_by_CP------------- -->
+     {% else %}
+            <!--Donc, on affiche une page contenant les objets-->
+            {% for CP,nbr in ZIP_CP %}
+        <!--<ul class="list-group list-group-flush"> -->
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span> <a href="/affichage_cp_theme_annee/?CP={{ CP }}">{{ CP }}</a></span> <span class="badge "> {{nbr}}  </span>
+            </li>
+         <!--</ul>-->
+            {% endfor %}
+
+        <!-- Pagination Dj DOC (TSY NAMPIASAINA ITO PAGINATION ITO SATRIA TSY NAMPIASA page_obj za tato amin'ny CP)
+        <div class= "pagination">
+            <span class="step-links">
+                {% if page_obj_by_CP.has_previous %}
+                    <a href="?pageCP=1&recherche={{recherche}}">&laquo; first</a>
+                    <a href="?pageCP={{ page_obj_by_CP.previous_page_number }}&recherche={{recherche}}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj_by_CP.number }} sur {{ page_obj_by_CP.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj_by_CP.has_next %}
+                    <a href="?pageCP={{ page_obj_by_CP.next_page_number }}&recherche={{recherche}}">next</a>
+                    <a href="?pageCP={{ page_obj_by_CP.paginator.num_pages }}&recherche={{recherche}}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+        -->
+        {% endif %}
+
+</div>
+
+
+    <!--------------------------------- Contenu de l'ONGLET 3 TITRE------------------------------- -->
+    <!--   NATAOKO COMMENTAIRE DAHOLO ITO CONTENU DE L'ONGLET TITRE ITO AU CAS OU ILAINA INDRAY
+
+
+    <div class="tab-pane fade {% if active_tab %} {% if active_tab == 'tab3' %} show active {% endif %} {% else %} {% endif %}" id="Titre" role="tabpanel" aria-labelledby="profile-tab">
+
+     {% if not page_obj_by_title %}
+      <li class="list-group-item" >
+      <p> Aucun titre de documents correspond à votre recherche  </p>
+      </li>
+
+
+     {% else %}
+
+            {% for item in page_obj_by_title %}
+            <li class="list-group-item" >
+                          <span class="text-success">Titre : </span> <span><a href="/metadata/?title={{ item.title }}">{{ item.title }}</a></span>
+                          <br>
+                          <span class="text-success">Code Projet : </span><span>{{ item.code_projet }}</span>
+                          <br>
+                          <span class="text-success">Date de publication : </span><span>{{ item.publication_date }}</span>
+                          <br>
+                          <span class="text-success">Type : </span><span>{{ item.type }}</span>
+                          <br>
+            </li>
+            {% endfor %}
+
+
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj_by_title.has_previous %}
+                    <a href="?pageTitle=1&recherche={{recherche}}">&laquo; first</a>
+                    <a href="?pageTitle={{ page_obj_by_title.previous_page_number }}&recherche={{recherche}}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj_by_title.number }} sur {{ page_obj_by_title.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj_by_title.has_next %}
+                    <a href="?pageTitle={{ page_obj_by_title.next_page_number }}&recherche={{recherche}}">next</a>
+                    <a href="?pageTitle={{ page_obj_by_title.paginator.num_pages }}&recherche={{recherche}}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        {% endif %}
+
+</div>
+
+  ETO NY FARAN'ILAY COMMENTAIRE AN'ILAY ONGLET TITRE (AO ATAO TSY COMMENTAIRE RAHA ILAINA INDRAY)-->
+
+
+
+<!--============================================ Contenu de l'ONGLET THEME=========================================-->
+
+    <div class="tab-pane fade {% if active_tab == 'tab3' %} show active {% endif %}" id="Theme" role="tabpanel" aria-labelledby="profile-tab">
+        <!------------ If not result in total result------------- -->
+     {% if not ZIP_TH %}
+      <li class="list-group-item " >
+      <p> Aucun thème correspondant à votre recherche  </p>
+      </li>
+
+        <!------------ If not result in total result------------- -->
+     {% else %}
+
+            {% for theme, nbr in ZIP_TH %}
+            <li class="list-group-item d-flex justify-content-between align-items-center" >
+                          <span><a href="/affichage_cp_theme_annee/?theme={{ theme }}">{{ theme }}</a></span> <span class="badge badge-primary badge-pill"> {{nbr}}  </span>
+
+            </li>
+
+            {% endfor %}
+
+
+        <!-- Pagination Dj DOC ===> desactivé ito
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj_by_theme.has_previous %}
+                    <a href="?pageTheme=1&recherche={{recherche}}">&laquo; first</a>
+                    <a href="?pageTheme={{ page_obj_by_theme.previous_page_number }}&recherche={{recherche}}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj_by_theme.number }} sur {{ page_obj_by_theme.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj_by_theme.has_next %}
+                    <a href="?pageTheme={{ page_obj_by_theme.next_page_number }}&recherche={{recherche}}">next</a>
+                    <a href="?pageTheme={{ page_obj_by_theme.paginator.num_pages }}&recherche={{recherche}}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        -->
+        {% endif %}
+
+</div>
+
+    <div class="tab-pane fade {% if active_tab == 'tab4' %} show active {% endif %}" id="annee" role="tabpanel" aria-labelledby="profile-tab">
+        <!------------ If not result in total result------------- -->
+     {% if not ZIP_AN %}
+      <li class="list-group-item " >
+      <p> Aucun thème correspondant à votre recherche  </p>
+      </li>
+
+        <!------------ If not result in total result------------- -->
+     {% else %}
+
+            {% for annee, nbr in ZIP_AN %}
+            <li class="list-group-item d-flex justify-content-between align-items-center" >
+                          <span><a href="/affichage_cp_theme_annee/?Annee={{ annee }}">{{ annee }}</a></span> <span class="badge badge-primary badge-pill"> {{nbr}}  </span>
+
+            </li>
+
+            {% endfor %}
+
+        {% endif %}
+
+</div>
+
+</div>
+
+<style>
+    .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.step-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.step-links a {
+  padding: 10px;
+  margin: 0 5px;
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  text-decoration: none;
+}
+
+.step-links a:hover {
+  background-color: #eee;
+}
+
+.current {
+  padding: 10px;
+  margin: 0 5px;
+  font-weight: bold;
+}
+
+</style>
+{% endblock content %}

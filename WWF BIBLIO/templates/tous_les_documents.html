@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<!-- ====================Utilisation de la classe "nav" pour créer une barre d'onglets===================== -->
+<ul class="nav nav-tabs nav-justified" style="position: fixed; top: 100px;left: 0;width: 100%;background-color: #fff;z-index: 999;" id="myTab" role="tablist">
+    <li class="nav-item">
+    <!-- Utilisation de la classe "nav-link" pour créer un lien d'onglet -->
+    <a class="nav-link {% if active_tab == 'tab1' %} active {% endif %} " id="_4" data-toggle="tab" href="#all" role="tab" aria-controls="home" aria-selected="true">Titre</a>
+  </li>
+    <li class="nav-item">
+    <!-- Utilisation de la classe "nav-link" pour créer un lien d'onglet -->
+    <a class="nav-link {% if active_tab == 'tab2' %} active {% endif %} " id="_1" data-toggle="tab" href="#CodeP" role="tab" aria-controls="home" aria-selected="true">Code P.</a>
+  </li>
+
+        <li class="nav-item">
+    <!-- Utilisation de la classe "nav-link" pour créer un lien d'onglet -->
+    <a class="nav-link {% if active_tab == 'tab3' %} active {% endif %} " id="_5" data-toggle="tab" href="#Theme" role="tab" aria-controls="home" aria-selected="true">Thème</a>
+  </li>
+
+    <li class="nav-item">
+    <!-- Utilisation de la classe "nav-link" pour créer un lien d'onglet -->
+    <a class="nav-link {% if active_tab == 'tab4' %} active {% endif %} " id="_3" data-toggle="tab" href="#annee" role="tab" aria-controls="home" aria-selected="true">Année</a>
+  </li>
+
+
+</ul>
+<!-- ========================================FIN ONGLET=================================================== -->
+
+<!--========================================CONTENU DE TOUS LES ONGLETS========================================-->
+<div class="tab-content" style="margin-top: 40px " id="myTabContent">
+
+        <!--============================== Contenu de l'ONGLET 1 TOUS=================================== -->
+    <div class="tab-pane fade {% if active_tab == 'tab1' %} show active {% endif %}  " id="all" role="tabpanel" aria-labelledby="profile-tab">
+
+            <!--Donc, on affiche une page contenant les objets--->
+            {% for titre, id in Zip_title %}
+            <li class="list-group-item">
+                          <span><a href="/metadata/?title={{ titre }}&id={{id}} " >{{ titre }}</a></span>
+                          <br>
+            </li>
+            {% endfor %}
+    </div>
+
+    <!--============================== Fin contenu ONGLET 1 (TOUS)=================================== -->
+
+    <!--=============================== Contenu de l'ONGLET 2CODE PROJET================================ -->
+    <div class="tab-pane fade {% if active_tab == 'tab2' %} show active {% endif %} " id="CodeP">
+
+            {% for CP,nbr in Zip_CP_triE %}
+        <ul class="list-group list-group-flush" >
+            <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color : {% cycle '#808080' 'white'%}">
+                <span> <a href="/affichage_cp_theme_annee/?CP={{ CP }}" style="color : {% cycle 'white' 'black'%}">{{ CP }}</a></span> <span class="badge badge-pill" style="color : {% cycle 'white' 'grey' %}"> {{nbr}}  </span>
+            </li>
+        </ul>
+            {% endfor %}
+
+    </div>
+
+
+
+    <!--------------------------------- Contenu de l'ONGLET THEME------------------------------- -->
+    <div class="tab-pane fade {% if active_tab == 'tab3' %} show active {% endif %}" id="Theme" role="tabpanel" aria-labelledby="profile-tab">
+
+            {% for theme, nbr in Zip_theme %}
+            <ul class="list-group list-group-flush" >
+            <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color : {% cycle '#808080' 'white'%}">
+                <span> <a href="/affichage_cp_theme_annee/?theme={{ theme }}" style="color : {% cycle 'white' 'black'%}">{{ theme }}</a></span> <span class="badge badge-pill" style="color : {% cycle 'white' 'grey' %}"> {{nbr}}  </span>
+            </li>
+        </ul>
+            {% endfor %}
+
+    </div>
+
+        <!--------------------------------- Contenu de l'ONGLET Année------------------------------- -->
+    <div class="tab-pane fade {% if active_tab == 'tab4' %} show active {% endif %}" id="annee" role="tabpanel" aria-labelledby="profile-tab">
+
+            {% for annee, nbr in Zip_annee %}
+            <ul class="list-group list-group-flush" >
+            <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color : {% cycle '#808080' 'white'%}">
+                <span> <a href="/affichage_cp_theme_annee/?Annee={{ annee }}" style="color : {% cycle 'white' 'black'%}">{{ annee }}</a></span> <span class="badge badge-pill" style="color : {% cycle 'white' 'grey' %}"> {{nbr}}  </span>
+            </li>
+            </ul>
+            {% endfor %}
+
+    </div>
+
+
+
+</div>
+
+<style>
+    .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.step-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.step-links a {
+  padding: 10px;
+  margin: 0 5px;
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  text-decoration: none;
+}
+
+.step-links a:hover {
+  background-color: #eee;
+}
+
+.current {
+  padding: 10px;
+  margin: 0 5px;
+  font-weight: bold;
+}
+
+</style>
+{% endblock content %}

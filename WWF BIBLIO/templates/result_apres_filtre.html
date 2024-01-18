@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block content %}
+
+<input class="form-control" id="myInput" type="text" placeholder="Filtre..." style="display:fix;color:black; background-color : khaki">
+            <br>
+<ul class="list-group" id="myList">
+    {% if page_demandE == 'CP'%}
+{% for boky in boky %}
+            <li >
+                <div class="media border p-3">
+                    <img src="/static.com/img/6.png" alt="panda" class="align-self-center mr-3" style="width:60px;">
+                    <div class="media-body">
+                          <span class="text-success">Titre : </span> <span><a href="/metadata/?title={{ boky.title }}&id={{boky.id}}">{{ boky.title }}</a></span>
+                          <br>
+                        {% if boky.thématique %}
+                          <span class="text-success">Thème : </span><span>{{ boky.thématique }}</span>
+                          <br>
+                        {% endif %}
+                        {% if boky.publication_date %}
+                          <span class="text-success">Année de publication : </span><span> {{ boky.publication_date }}</span>
+                          <br>
+                        {% endif %}
+
+                        {% if boky.code_projet %}
+                         <span class="text-success">Code projet : </span><span> {{ boky.code_projet }}</span>
+                          <br>
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
+{% endfor %}
+    {% elif page_demandE == 'theme'%}
+{% for boky in boky %}
+            <li >
+                <div class="media border p-3">
+                    <img src="/static.com/img/6.png" alt="panda" class="align-self-center mr-3" style="width:60px;">
+                    <div class="media-body">
+                           <span><a href="/metadata/?title={{ boky.title }}&id={{boky.id}}">{{ boky.title }}</a></span>
+                          <br>
+                        {% if boky.code_projet %}
+                          <span>{{ boky.code_projet}}</span>
+                          <br>
+                        {% endif %}
+
+                        {% if boky.publication_date %}
+                          <span class="text-success">Année de publication : </span><span> {{boky.publication_date}} </span>
+                          <br>
+                        {% endif %}
+                        {% if boky.thématique %}
+                          <span class="text-success">Thème : </span><span> {{boky.thématique}} </span>
+                          <br>
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
+{% endfor %}
+
+    {% elif page_demandE == 'date'%}
+
+{% for boky in boky %}
+            <li>
+                <div class="media border p-3">
+                    <img src="/static.com/img/6.png" alt="panda" class="align-self-center mr-3"style="width:60px;">
+                    <div class="media-body">
+                          <span class="text-success">Titre : </span> <span><a href="/metadata/?title={{ boky.title }}&id={{boky.id}}">{{ boky.title }}</a></span>
+                          <br>
+                        {% if boky.code_projet %}
+                          <span class="text-success">CP : </span><span>{{ boky.code_projet}}</span>
+                          <br>
+                        {% endif %}
+
+                        {% if boky.thématique %}
+                          <span class="text-success">Theme : </span><span> {{ boky.thématique }}</span>
+                          <br>
+                        {% endif %}
+                        {% if boky.publication_date %}
+                          <span class="text-success">Année de publication </span><span> {{ boky.publication_date }}</span>
+                          <br>
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
+{% endfor %}
+
+    {% endif %}
+</ul>
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myList li").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+{% endblock content %}

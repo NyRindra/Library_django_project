@@ -1,0 +1,132 @@
+{% extends "base.html"%}
+
+{% block content %}
+<style>
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			max-width: 1200px;
+			margin: 0 ;
+			padding:0;
+			table-layout: fixed;
+
+
+		}
+		th, td {
+			padding: 8px;
+			border: 1px solid #ddd;
+			display: inline-block;
+			vertical-align: top; /* Alignement vertical pour empêcher les contenus d'être centrés verticalement */
+					/* Ajustement de la largeur des colonnes pour qu'elles soient sur la même ligne */
+		}
+		th {
+			background-color: #17A2B8;
+			color: white;
+			width: 25%;           /* Ajustement de la largeur de la colonne des titres */
+			font-weight: normal; /* Suppression de la mise en gras par défaut */
+			text-align: left;     /* Alignement horizontal */
+			margin-right: 1%;     /* Ajout d'une marge à droite pour l'espacement entre le titre et le contenu */
+
+			/* ireto telo ireto tsy maintsy ampidirina raha te anao text overflow*/
+			white-space: nowrap;
+  			overflow: hidden;
+  			text-overflow: ellipsis;
+		}
+		td {
+			width: 69%; /* Ajustement de la largeur des colonnes pour qu'elles soient sur la même ligne */
+			margin-left: 1%; /* Ajout d'une marge à gauche pour l'espacement entre le titre et le contenu */
+		}
+	</style>
+
+<style>
+	a.bouton {
+
+  border: none;
+  background-color: #17A2B8;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  width:50%;
+  height:100%;
+  text-align:center;
+  float:left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+</style>
+
+<div class="container-fluid">
+
+  <p>Vous trouverez ici les informations concernant le document que vous avez cherché</p>
+	<!-- TABLEAU DES METADATA-->
+  <table class="table table-hover">
+
+		<tr>
+			<th>TITRE</th>
+			<td>{{metadata.title}}</td>
+		</tr>
+
+		<tr>
+			<th>LANGUE</th>
+			<td>{{metadata.langue.langue}}</td>
+		</tr>
+
+		<tr>
+			<th>AUTEUR(S)</th>
+			{% if not metadata.auteur %}
+            <td> Inconnu </td>
+            {% else %}
+            <td>{{metadata.auteur}}</td>
+            {% endif %}
+		</tr>
+
+	  	{% if metadata.publication_data %}
+		<tr>
+			<th>DATE DE PUBLICATION</th>
+			<td>{{metadata.publication_date}}</td>
+		</tr>
+	  	{% endif %}
+	  	{% if metadata.code_projet %}
+        <tr>
+			<th>CODE PROJET</th>
+			<td>{{metadata.code_projet}}</td>
+		</tr>
+	  	{% endif %}
+	  	{% if metadata.thème %}
+        <tr>
+			<th>THEME</th>
+			<td>{{metadata.thème}}</td>
+		</tr>
+		{% endif %}
+	  	{% if metadata.publication_date %}
+        <tr>
+			<th>ANNÉE DE PUBLICATION</th>
+			<td>{{metadata.publication_date}}</td>
+		</tr>
+		{% endif %}
+
+        <tr>
+			<th>TYPE</th>
+			<td>{{metadata.type}}</td>
+		</tr>
+	  	{% if metadata.résumé %}
+		<tr>
+			<th>RESUME/DESCRIPTION</th>
+			<td >{{metadata.résumé}}</td>
+		</tr>
+	  	{% endif %}
+	  <tr>
+			<th style="background-color:red">LIEN</th>
+			<td>  <a class="bouton" href="{% url 'view_pdf' chemin=chem  %}" > Consulter </a>
+				<a style="background-color: #17A200" class="bouton" href="{% url 'batch' chemin=chem titre=metadata.title %}" > Batch Windows </a>  <!--<a href="{% url 'show'%}" id="monlien" > </a>-->
+
+			</td>
+			</tr>
+	</table>
+
+</div>
+
+
+{% endblock content %}

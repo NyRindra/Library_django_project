@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<body>
+
+<p style="margin-left: 10px">Resultats de recherche...</p>
+        <ul class="list-group">
+          {% for item in book_list %}
+          <li class="list-group-item">
+              <span class="text-info">Title: </span> <span>{{ item.book.title }}</span>
+              <br>
+              <span class="text-info">Publisher: </span><span>{{ item.book.publisher }}</span>
+              <br>
+              <span class="text-info">Publication Date: </span><span>{{ item.book.publication_date }}</span>
+              <br>
+              <span class="text-info">Rating: </span><span>{{ item.book_rating }}</span>
+              <br>
+              <span class="text-info">Number of reviews: </span><span>{{ item.number_of_reviews }}</span>
+              <br>
+              {% if item.book_rating is null %}
+              <span>Provide a rating and write the first review for this book.</span>
+              <br>
+              {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+</body>
+
+{% endblock content %}

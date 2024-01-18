@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static.com/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static.com/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+        <style>
+
+
+*{
+box-sizing:border-box;
+}
+body{
+height: 100px;
+font-family: 'Oswald', sans-serif !important;
+}
+.login-container {
+  width: 35%;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+
+}
+
+.login-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.login-container form {
+  display: inline-block;
+  text-align: left;
+}
+
+.login-container form label {
+  display: none;
+  margin-bottom: 10px;
+}
+
+form{
+padding:0 0 0 0;
+margin: 0 0 0 0
+}
+.login-container form input[type="submit"], a {
+  padding: 10px 20px;
+  border: none;
+  background-color: #17A2B8;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  width:100%;
+  text-align:center;
+  float:left;
+}
+
+.login-container form input[type="submit"]:hover, a:hover {
+  background-color: #1a73e8;
+}
+/* Style pour les erreurs de validation */
+li, p.err {
+  display: block;
+  margin-top: 5px;
+  font-size: 14px;
+  color: white;
+  background-color: red;
+  border: 1px solid darkred;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+li , p.err{
+  transition: transform 0.5s ease-out;
+}
+
+li:hover {
+  transform: translateX(8px);
+}
+.errorlist{
+padding:0 0 0 0 ;
+
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+  float:left;
+
+  /* pour le text overflow, il faut les 3 propriétés suivant */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+form{
+width:100%;
+}
+
+form input{
+display: block;
+width: 100%
+}
+
+#selection{
+  box-sizing: border-box;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 0px;
+  width: 100%;
+  text-align:center
+
+}
+/* --------------------Translate form and welcome -------------------*/
+.login-container {
+  opacity: 0;
+  transform: translateY(-40px);
+  transition: all 1s ease-in-out;
+}
+
+.login-container.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.CreationCompte{
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 1s ease-in-out;
+}
+
+.CreationCompte.show{
+  opacity: 1;
+  transform: translateX(0);
+
+/* ----------------------------------------------------------------------- */
+
+
+
+</style>
+
+</head>
+<body style="background-color: #404040">
+
+<div class="container-fluid" style="margin-top:5%">
+    <h2 class="CreationCompte" style="text-align:center; color:white">Création de compte</h2>
+
+    <!-- Volet de selection de type de compte-->
+    <!--
+    <div class="login-container" style="margin-top:14px">
+        <form style="padding:0 0 0 0">
+            <p style="margin-bottom:0px">
+            <select id="selection" name="option">
+                <option value="Niveau1">Niveau 1</option>
+                <option value="Niveau2">Niveau 2</option>
+                <option value="Niveau3">Niveau 3</option>
+            </select>
+            </p>
+        </form>
+    </div>
+    -->
+<!-- Liste des formulaire (à afficher en fonction du delection) (utilisation de JQuery)-->
+    <!-- Formulaire niveau 1-->
+    <div class="login-container" id="FormNiv1" style="margin-top:14px; ">
+
+    <form action="/signin/" method="GET" >
+        {% csrf_token%}
+        {% if erreur1 %}
+        <p class="err" style="text-align : center">{{erreur1}}</p>
+        {% endif %}
+        {{form1.as_p}}
+        <input type="hidden" value = "NIV1" name="AccountType">
+        <p >
+        <input type="submit" value="Créer"><a href="/accounts/login" style="background-color: #f2f2f2; color:#17A2B8" > login</a>
+        </p>
+    </form>
+
+    </div>
+    <!-- Formulaire niveau 2 -->
+    <div class="login-container" id="FormNiv2" style="margin-top:14px">
+
+    <form action="/signin/" method="GET" style="font-family: 'Oswald'" >
+        {% csrf_token%}
+        {% if erreur2 %}
+        <p class="err" style="text-align : center">{{erreur2}}</p>
+        {% endif %}
+        {{form2.as_p}}
+        <input type="hidden" value = "NIV2" name="AccountType">
+        <p>
+        <input type="submit" value="Créer">
+        <a href="/accounts/login" style="background-color: #f2f2f2;color:#17A2B8" > login</a>
+        </p>
+    </form>
+
+    </div>
+    <!-- Formulaire niveau 3 -->
+    <div class="login-container" id="FormNiv3" style="margin-top:14px">
+
+    <form action="/signin/" method="GET" style="font-family: 'Oswald'">
+        {% csrf_token%}
+        {% if erreur3 %}
+        <p class="err" style="text-align : center">{{erreur3}}</p>
+        {% endif %}
+        {{form3.as_p}}
+        <input type="hidden" value = "NIV3" name="AccountType">
+        <p style="display:inline">
+        <input type="submit" value="Créer" ><a href="/accounts/login" style="background-color: #f2f2f2;color:#17A2B8" > login</a>
+        </p>
+    </form>
+
+    </div>
+</div>
+</div>
+<script>
+// Animation d'affichage des formulaire
+  $(document).ready(function() {
+  $('.login-container').addClass('show');
+  $('.CreationCompte').addClass('show')
+});
+
+
+    // Changement de l'attribut text en attribut password (PAGE 268 DJANGO FR and jQuery EVENTS (SITE TSINTO MECATR)
+    $(document).ready(function(){
+        $("#id_NV1-mot_de_passe").attr("type", "password");
+        $("#id_NV2-mot_de_passe").attr("type", "password");
+        $("#id_NV3-mot_de_passe").attr("type", "password");
+        $("#id_NV1-confirmation").attr("type", "password");
+        $("#id_NV2-confirmation").attr("type", "password");
+        $("#id_NV3-confirmation").attr("type", "password");
+
+    // Affichage selon la selection par defaut quand le document est chargé (ready)
+        // Affichage du formuaire niveau 1
+        if ($('#selection').val() == "Niveau1"){
+            $('#FormNiv2').hide();
+            $('#FormNiv3').hide();
+            $('#FormNiv1').show();
+        }
+
+        // Affichage du formuaire niveau 2
+        else if ($('#selection').val() == "Niveau2"){
+            $('#FormNiv2').show();
+            $('#FormNiv3').hide();
+            $('#FormNiv1').hide();
+        }
+
+        // Affichage du formuaire niveau 3 (io else io no mampiseo par defaut an'ilay 3)
+        else {
+        $('#FormNiv2').hide();
+        $('#FormNiv3').show();
+        $('#FormNiv1').hide();
+        }
+    });
+
+    // Affichage quand la boite de selection change
+        // Affichage du formuaire niveau 1
+    $('#selection').change(function(){
+        if ($('#selection').val() == "Niveau1"){
+            $('#FormNiv2').hide();
+            $('#FormNiv3').hide();
+            $('#FormNiv1').show();
+        }
+
+        // Affichage du formuaire niveau 2
+        else if ($('#selection').val() == "Niveau2"){
+            $('#FormNiv2').show();
+            $('#FormNiv3').hide();
+            $('#FormNiv1').hide();
+        }
+
+        // Affichage du formuaire niveau 3
+        else {
+        $('#FormNiv2').hide();
+        $('#FormNiv3').show();
+        $('#FormNiv1').hide();
+        }
+    })
+
+</script>
+</body>
+</html>
+

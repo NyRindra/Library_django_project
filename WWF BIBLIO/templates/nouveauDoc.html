@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Biblio | WWF-Madagascar</title>
+    <link rel="icon" type="image/x-icon" href="/static.com/img/Panda1.png">
+
+    <!-- Liaison pour le bootstrap de tout site  (Obligation de mettre un slash devant l'URL de href) -->
+    <link rel="stylesheet" href="/static.com/bootstrap.min.css">
+
+    <!-- Les deux liaisons suivantes sont utile pour le bouton navbar (cacher et afficher le champ de recherche)-->
+    <script src="/static.com/jquery.min.js"></script>
+    <script src="/static.com/bootstrap.min.js"></script>
+
+    <!-- En plus des deux en dessous (jquery.min.js et bootstrap.min.js), le suivant se sert pour le carousel slide-->
+    <script src="/static.com/popper.min.js"></script>
+
+
+
+    <style type="text/css">
+      .navbar {
+        min-height: 100px;
+        font-size: 25px;
+      }
+      .navbar-brand {
+        font-size: 25px;
+      }
+    </style>
+
+    <!--Animation carte-->
+    <style>
+    .card {
+          transition: all 0.3s ease-in-out;
+          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+          background-color: #f2f2f2;
+          cursor:pointer;
+          color : black
+        }
+
+        .card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+          background-color: white;
+          text-decoration: none;
+        }
+
+    </style>
+<!--Style image voalohany sy ilay soratra eo amboniny -->
+    <style>
+    .image-container {
+        position: relative;
+        }
+
+    .image-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 36px;
+    }
+        </style>
+    <!--POLICE-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Oswald', sans-serif !important;
+        }
+
+    </style>
+
+    <style>
+    *{
+box-sizing:border-box;
+}
+
+.login-container {
+  width: 40%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 1px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+
+.login-container form {
+  display: inline-block;
+  text-align: left;
+}
+
+.login-container form label {
+  display: block;
+  margin-bottom: 1px;
+}
+
+.login-container form input {
+  box-sizing: border-box;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.login-container form input[type="submit"] {
+  padding: 10px 20px;
+  border: none;
+  background-color: #17A2B8;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+.login-container form input[type="submit"]:hover {
+  background-color: #1a73e8;
+}
+
+form{
+width:100%;
+}
+
+
+/* Style pour les erreurs de validation */
+li {
+  display: block;
+  margin-top: 5px;
+  font-size: 14px;
+  color: white;
+  background-color: red;
+  border: 1px solid darkred;
+  padding: 5px;
+  border-radius: 3px;
+}
+li#menu{
+font-size: 25px;
+list-style: none;
+display: list-item;
+text-align: -webkit-match-parent;
+box-sizing: border-box;
+
+}
+li {
+  transition: transform 0.5s ease-out;
+}
+
+li:hover {
+  transform: translateX(8px);
+}
+.errorlist{
+padding:0 0 0 0 ;
+
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+
+}
+
+/* --------------------Translate form and welcome -------------------*/
+/* tsy maintsy miaraka amin'ilay jQuery any ambany ireto vao mety*/
+.login-container {
+  opacity: 0;
+  transform: translateY(-40px);
+  transition: all 1s ease-in-out;
+}
+
+.login-container.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ----------------------------------------------------------------------- */
+
+    </style>
+</head>
+<body style="background-color: #808080">
+<!---------------------------------------------------Navigation bar ------------------------------------------------->
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top" style="z-index:1000" id="ppp" >
+          <a class="navbar-brand" href="/welcome"><img src="/static.com/img/Panda1.png" class="img-thumbnail" width="70px" height="70px"></a>
+
+          <!-- Boutton d'affichage qui ne s'affiche pas en mode ordinateur (automatique -- les deux liaison)-->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <!--
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/welcome/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    -->
+                    <li id="menu" class="nav-item ">
+                        <div class="dropdown bg-dark" >
+                            <a class="nav-link" data-toggle="dropdown" style="cursor:pointer">
+                              Menu
+                            </a>
+                            <div class="dropdown-menu ">
+                                <a class="dropdown-item" href="/welcome">Acceuil</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#deconnexionModal" style="cursor:pointer">Déconnexion</a>
+
+                            </div>
+                        </div>
+
+                    </li>
+                    <!-- afaka mametraka hafa raha te hametraka option-->
+                    <li class="nav-item">
+
+                    </li>
+
+                </ul>
+
+          </div>
+</nav>
+<!-------------------------------------- MODAL liée avec la bouton logout dans NAVBAR---------------------------------------------->
+<!-- Un modal c'est la fenetre qui s'affiche lorsque le bouton se deconnecter est cliqué -->
+<div class="modal fade" id="deconnexionModal" tabindex="-1" aria-labelledby="deconnexionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Déconnexion</h4>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <p>Voulez-vous vraiment vous déconnecter ?</p>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-primary"><a href="/login" style="color:white"> Se déconnecter</a> </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<!--------------------------------------------------- FIN MODAL ------------------------------------------------------->
+
+<!---------------------------------- Sary sy soratra --------------------------------------->
+        <div>
+                <div class="col-md-12">
+                    <div class="image-container-fluid">
+                        <img src="/static.com/img/tapia.jpg" alt="girl with a book" class="img-fluid w-100" style="max-height: 100px; object-fit: cover;">
+                        <!-- Any ambony ny style CSS an'ito-->
+                        <div class="image-overlay">
+                            <div class="container">
+                            <h1 style="text-align:center">Ajoutez un nouveau document</h1>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+<div class="login-container" style="margin-top:14px; font-family: 'Oswald'">
+        <form style="padding:0 0 0 0">
+            <p style="margin-bottom:0px">
+            <select id="selection" name="option">
+                <option value="Formulaire">FORMULAIRE</option>
+                <option value="CSV">CSV</option>
+            </select>
+            </p>
+        </form>
+</div>
+        {% load static %}
+<div class="login-container" id="formulaire" style="margin-top:14px">
+
+    <!-- vao tsy misy attribut enctype dia tsy lasa mihitsy ny fichier -->
+    <form action="/nouveau/" enctype="multipart/form-data" method="post" style=" font-family : 'Oswald' " >
+        {% csrf_token%}
+        {{form.as_p}}
+        <input type="hidden" value = "Formulaire" name="form_type">
+        <p>
+        <input type="submit" value="Valider">
+        </p>
+    </form>
+
+<!--
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const dossierInput = document.getElementById('id_dossier');
+
+    dossierInput.addEventListener('click', async function() {
+      try {
+        const folderHandle = await window.showDirectoryPicker();
+        const folderPath = folderHandle.name;
+        dossierInput.value = folderPath;
+      } catch (error) {
+        console.error('Erreur lors de la sélection du dossier :', error);
+      }
+    });
+  });
+</script>
+
+-->
+</div>
+
+
+<div class="login-container" id="csv" style="margin-top:14px">
+
+    <!-- vao tsy misy attribut enctype dia tsy lasa mihitsy ny fichier -->
+    <form action="/nouveau/" enctype="multipart/form-data" method="post" style=" font-family : 'Oswald' " >
+        {% csrf_token%}
+        {{form_csv.as_p}}
+        <input type="hidden" value = "CSV" name="form_type">
+        <p>
+        <input type="submit" value="Valider">
+        </p>
+    </form>
+</div>
+
+
+<!----------------------------------------- Formulaire ------------------------------------------------------>
+
+
+
+
+<script>
+  $(document).ready(function() {
+  $('.login-container').addClass('show');
+
+});
+</script>
+<script>
+
+
+    // Affichage selon la selection par defaut quand le document est chargé (ready)
+        // Affichage du formuaire niveau 1
+        $(document).ready(function(){
+        if ($('#selection').val() == "Formulaire"){
+            $('#csv').hide();
+            $('#formulaire').show();
+        }
+
+        // Affichage du formuaire niveau 2
+        else if ($('#selection').val() == "CSV"){
+            $('#csv').show();
+            $('#formulaire').hide();
+        }
+    });
+
+    // Affichage quand la boite de selection change
+        // Affichage du formuaire niveau 1
+    $('#selection').change(function(){
+       if ($('#selection').val() == "Formulaire"){
+            $('#csv').hide();
+            $('#formulaire').show();
+        }
+
+        // Affichage du formuaire niveau 2
+        else if ($('#selection').val() == "CSV"){
+            $('#csv').show();
+            $('#formulaire').hide();
+        }
+    })
+
+</script>
+
+</body>
+</html>

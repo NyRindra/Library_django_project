@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Message de confirmation</title>
+      <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Oswald', sans-serif !important;
+        background-color: #f2f2f2;
+      }
+
+      .message {
+        background-color: #FF1493;
+        border: 1px solid #33cc33;
+        padding: 10px;
+        text-align: center;
+        margin: 50px auto;
+        max-width: 600px;
+        opacity: 0;
+        transform: translateY(-50px);
+        animation: show-message 0.5s ease-out forwards;
+      }
+
+      h1 {
+        font-size: 36px;
+        margin: 0;
+      }
+
+      @keyframes show-message {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="message">
+      <h1>Une erreur est survenue</h1>
+        <p>{{ error_msg }}</p>
+    </div>
+  </body>
+</html>

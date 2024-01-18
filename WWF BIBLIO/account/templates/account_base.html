@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static.com/bootstrap.min.css"> <!-- Obligation de mettre un slash devant l'URL de href-->
+
+    <!-- Les deux liaisons suivantes sont utile pour le bouton navbar-->
+    <script src="/static.com/jquery.min.js"></script>
+    <script src="/static.com/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static.com/bootstrap-icons.css">
+
+    <!-- POLICE -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <style>
+
+
+*{
+box-sizing:border-box;
+}
+body{
+height: 100px;
+font-family: 'Oswald', sans-serif !important;
+}
+.login-container {
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+
+}
+
+.login-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.login-container form {
+  display: inline-block;
+  text-align: left;
+}
+
+.login-container form label {
+  display: none;
+  margin-bottom: 10px;
+}
+
+.login-container form input[type="email"],
+.login-container form input[type="password"] {
+  box-sizing: border-box;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.login-container form input[type="submit"] {
+  padding: 10px 20px;
+  border: none;
+  background-color: #17A2B8 ;
+  color: #fff;
+  width: 100%;
+  font-size: 16px;
+  cursor: pointer;
+}
+.liencompte {
+  padding: 10px 20px;
+  border: none;
+  background-color: #17A2B8 ;
+  color: #fff;
+  width: 80%;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center
+}
+.a_reset_password{
+  padding: 10px 20px;
+  border: none;
+  font-size: 16px;
+}
+
+.login-container form input[type="submit"]:hover {
+  background-color: #1a73e8;
+}
+/* Style pour les erreurs de validation */
+li {
+  display: block;
+  margin-top: 5px;
+  font-size: 14px;
+  color: white;
+  background-color: red;
+  border: 1px solid darkred;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+li {
+  transition: transform 0.5s ease-out;
+}
+
+li:hover {
+  transform: translateX(8px);
+}
+.errorlist{
+padding:0 0 0 0 ;
+
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+
+}
+form{
+width:90%;
+}
+/* --------------------Translate form and welcome -------------------*/
+.login-container {
+  opacity: 0;
+  transform: translateY(-40px);
+  transition: all 1s ease-in-out;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+}
+
+.login-container.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.Bienvenue{
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 1s ease-in-out;
+}
+
+.Bienvenue.show{
+  opacity: 1;
+  transform: translateX(0);
+}
+a.creercompte:hover{
+text-decoration : none
+}
+/* ----------------------------------------------------------------------- */
+
+    </style>
+</head>
+<body style="background-color: #808080">
+
+
+<div class="container" style="margin-top:5%">
+    {% block content1 %}
+    <h2 style="text-align:center; color:white" class="Bienvenue">Bienvenue</h2>
+    {% endblock content1 %}
+    <div class="login-container" style="margin-top:14px">
+    {% block content %}
+
+    {% endblock content %}
+
+    </div>
+    {% block content2 %}
+    {% endblock content2 %}
+</div>
+
+<!-- Animation des formulaire et texte en tete du formulaire -->
+<script>
+  $(document).ready(function() {
+  $('.login-container').addClass('show');
+  $('.Bienvenue').addClass('show')
+});
+</script>
+
+</body>
+</html>
